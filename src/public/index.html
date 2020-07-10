@@ -71,7 +71,7 @@
         function submitHandler(e){
             e.preventDefault();
             socket.emit('name user', document.querySelector('.user').value);
-            fetch('http://simplesocketiochat.herokuapp.com/',{
+            fetch('https://simplesocketiochat.herokuapp.com/',{
                 headers:{
                     'Content-Type':'application/json'
                 },
