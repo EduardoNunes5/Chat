@@ -8,11 +8,10 @@ const path = require('path');
 const chatRouter = require('./routes/chatRouter');
 
 
-
-app.use(express.static(path.join(__dirname, 'views')));
 app.use(express.static(path.join(__dirname, 'public')));
-
 app.use(chatRouter);
+
+
 let cont = 1;
 io.on('connection', socket =>{
     socket.on('chat message', msg =>{
