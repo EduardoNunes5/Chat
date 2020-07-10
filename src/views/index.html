@@ -12,9 +12,23 @@
 
 <body>
     <header>
-        <h1 class="h1 text-center m-2">Bem vindo ao chat</h1>
+        <h1 class="h1 text-center m-5 text-light">Live<span class="font-weight-bold">Chat</span></h1>
     </header>
-    <div class="chat-container">
+    <div class="chat-container rounded">
+
+        <div class=" border  text-center  justify-content-center
+        rounded p-5 box-form" id="blockUser">
+            <h3 class="h3 text-light">Bem vindo ao live chat</h3>
+            <p class="text-light m-1 mb-2">Um chat online especialmente para você e seus amigos,
+                digite o seu nome para começar
+            </p>
+            <!--h4 class="h4 text-light mb-2">Digite o seu nome</h4-->
+            <form method="get"  id="formUser">
+                <input type="text"  class =" form-group w-100" id="nameUser"placeholder="digite seu nome aqui..."/>
+                <input type="submit" id="my-submit" class="btn btn-success btn-block" value="Começar"/>
+            </form>
+        </div>
+
         <section class="chat-messages-container">
             <ul class="messages-list">
             </ul>
@@ -32,6 +46,17 @@
         $button = document.querySelector('button');
         $input = document.querySelector('input');
         $ul = document.querySelector('ul');
+        $form = document.querySelector('#formUser');
+        $block = document.querySelector('#blockUser');
+        
+        $form.addEventListener('submit', function(e) {
+            // console o valor do campo, faz isso ir para o id, tá
+            //pegando mais nao sei como coloca isso no nome não
+            console.log(nameUser.value);
+            $block.remove();
+            // impede o envio do form
+            e.preventDefault();
+        });
 
         $button.addEventListener('click', () => {
             console.log($input.value);
@@ -39,7 +64,7 @@
             $input.value = "";
 
         })
-
+        
         socket.on('chat message', data => {
             const li = document.createElement('li');
             li.innerText = data;
@@ -47,13 +72,13 @@
         })
 
     </script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    <!--script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
         integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
         crossorigin="anonymous"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap.min.js"></script-->
 
 </body>
 
