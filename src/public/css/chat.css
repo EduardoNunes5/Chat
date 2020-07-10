@@ -1,0 +1,37 @@
+body{
+    overflow-y: hidden;
+}
+
+.chat-container{
+    width: 80%;
+    margin: 0 auto;
+    height:20em;
+    border: 1px solid lightgrey;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.chat-messages-container{
+    height:18em;
+    border:1px solid red;
+    overflow-y: auto;
+    overflow-x: hidden;
+    word-wrap: break-word;
+    padding-top: 0;
+    padding-bottom: 0;
+
+}
+
+.messages-list{
+    padding:0 ;
+    list-style: none;
+}
+
+.chat-actions{
+    display: flex;
+}
+
+.text-input{
+    flex-grow: 2;
+}
