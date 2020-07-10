@@ -18,7 +18,7 @@
 
         <div class=" border  text-center  justify-content-center
         rounded p-4 box-form block-user">
-            <h3 class="h3 text-light">Bem vindo ao live chat</h3>
+            <h3 class="h3 text-light">Bem vindo ao LiveChat</h3>
             <p class="text-light m-1 mb-2 hidden-sm">Um chat online especialmente para você e seus amigos,
                 digite o seu nome para começar
             </p>
@@ -50,9 +50,9 @@
         $block = document.querySelector('.block-user');
         
         $form.addEventListener('submit', function(e) {
-            // console o valor do campo, faz isso ir para o id, tá
-            //pegando mais nao sei como coloca isso no nome não
+            // console o valor do campo
             console.log(document.querySelector('.user').value);
+            socket.emit('name user', document.querySelector('.user').value);
             $block.remove();
             // impede o envio do form
             e.preventDefault();

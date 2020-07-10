@@ -52,7 +52,7 @@ body{
 @media (max-width: 780px) {
     div.block-user {
         width: 90%;
-        margin-top: 10PX ;
+        margin-top: 10px ;
         font-size: 12px;
         
     }
