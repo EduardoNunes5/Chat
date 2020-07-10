@@ -1,49 +1,60 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-    <head>
-        <meta charset="utf-8">
-        <title>Chat</title>
-        <meta name="viewport" content="device-width, initial-scale=1.0">
-        <script src="/socket.io/socket.io.js"></script>
-        <link rel="stylesheet" type="text/css" href="css/chat.css">
-    </head>
-    <body>
-        <header>
-            <h1>Bem vindo ao chat</h1>
-        </header>
-        <div class="chat-container">
-            <section class="chat-messages-container">
-                <ul class="messages-list">
-                </ul>
-            </section>
-            <div class="chat-actions">
-                <input type="text" class="text-input" placeholder="digite sua mensagem..."/>
-                <button type="button" class="send">enviar</button>
-            </div>
+
+<head>
+    <meta charset="utf-8">
+    <title>Chat</title>
+    <meta name="viewport" content="device-width, initial-scale=1.0">
+    <script src="/socket.io/socket.io.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/chat.css">
+    <link rel="stylesheet" href="css/bootstrap/css/bootstrap.min.css">
+</head>
+
+<body>
+    <header>
+        <h1 class="h1 text-center m-2">Bem vindo ao chat</h1>
+    </header>
+    <div class="chat-container">
+        <section class="chat-messages-container">
+            <ul class="messages-list">
+            </ul>
+        </section>
+        <div class="chat-actions">
+            <input type="text" class="text-input" placeholder="digite sua mensagem..." />
+            <button  class="btn btn-success p-2 ml-2" class="send">enviar</button>
         </div>
+    </div>
 
-        <script>
-            var socket = io();
+    <script>
+        var socket = io();
 
-            $joinChat = document.querySelector('.join');
-            $button = document.querySelector('button');
-            $input = document.querySelector('input');
-            $ul = document.querySelector('ul');
+        $joinChat = document.querySelector('.join');
+        $button = document.querySelector('button');
+        $input = document.querySelector('input');
+        $ul = document.querySelector('ul');
 
-            $button.addEventListener('click', ()=>{
-                console.log($input.value);
-                socket.emit('chat message', $input.value);
-                $input.value = "";
+        $button.addEventListener('click', () => {
+            console.log($input.value);
+            socket.emit('chat message', $input.value);
+            $input.value = "";
 
-            })
+        })
 
-            socket.on('chat message', data =>{
-                const li = document.createElement('li');
-                li.innerText = data;
-                $ul.appendChild(li);
-            })
+        socket.on('chat message', data => {
+            const li = document.createElement('li');
+            li.innerText = data;
+            $ul.appendChild(li);
+        })
 
-        </script>
+    </script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="js/bootstrap.min.js"></script>
 
-    </body>
+</body>
+
 </html>
