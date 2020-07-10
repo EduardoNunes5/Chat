@@ -5,9 +5,9 @@
     <meta charset="utf-8">
     <title>Chat</title>
     <meta name="viewport" content="device-width, initial-scale=1.0">
-    <script src="/socket.io/socket.io.js"></script>
     <link rel="stylesheet" type="text/css" href="css/chat.css">
     <link rel="stylesheet" href="css/bootstrap/css/bootstrap.min.css">
+    <script src="/socket.io/socket.io.js"></script>
 </head>
 
 <body>
@@ -23,8 +23,8 @@
                 digite o seu nome para começar
             </p>
             <!--h4 class="h4 text-light mb-2">Digite o seu nome</h4-->
-            <form method="get"  class="form-user">
-                <input type="text"  class =" form-group w-100 user"placeholder="digite seu nome aqui..."/>
+            <form method="post" action="/"  class="form-user">
+                <input type="text" name="name" class =" form-group w-100 user"placeholder="digite seu nome aqui..."/>
                 <input type="submit"  class="btn btn-success btn-block" value="Começar"/>
             </form>
         </div>
@@ -40,38 +40,62 @@
     </div>
 
     <script>
-        var socket = io();
+        const socket = io();
+        const $button = document.querySelector('button');
+        const $msgInput = document.querySelector('.text-input');
+        const $allTxtInputs = document.querySelectorAll('input');
+        const $ul = document.querySelector('ul');
+        const $form = document.querySelector('.form-user');
+        const $block = document.querySelector('.block-user');
+        const nameCookie = document.cookie.split('=');
 
-        $joinChat = document.querySelector('.join');
-        $button = document.querySelector('button');
-        $input = document.querySelector('input');
-        $ul = document.querySelector('ul');
-        $form = document.querySelector('.form-user');
-        $block = document.querySelector('.block-user');
-        
-        $form.addEventListener('submit', function(e) {
-            // console o valor do campo
-            console.log(document.querySelector('.user').value);
-            socket.emit('name user', document.querySelector('.user').value);
+        [].map.call($allTxtInputs, input=>  keyUpHandler(input));
+
+        if(nameCookie.length > 1 && nameCookie[0] ===  "name" && nameCookie[1]){
+            socket.emit('name user', nameCookie[1]);
             $block.remove();
-            // impede o envio do form
-            e.preventDefault();
-        });
+        }
 
+
+        $form.addEventListener('submit', submitHandler);
         $button.addEventListener('click', () => {
-            console.log($input.value);
-            socket.emit('chat message', $input.value);
-            $input.value = "";
-
+            sendMsg($msgInput.value);
         })
-        
+
         socket.on('chat message', data => {
             const li = document.createElement('li');
             li.innerText = data;
             $ul.appendChild(li);
         })
 
+        function submitHandler(e){
+            e.preventDefault();
+            socket.emit('name user', document.querySelector('.user').value);
+            fetch('http://localhost:8080/',{
+                headers:{
+                    'Content-Type':'application/json'
+                },
+                method: 'POST',
+                body: JSON.stringify({name: document.querySelector('.user').value})
+            })
+            .then(()=> $block.remove())
+            .catch((err)=> console.log(err))
+        }
+
+        function keyUpHandler(input){
+            input.addEventListener('keyup', (event)=>{
+                if(event.keyCode === 13){
+                    sendMsg($msgInput.value);
+                }
+            })
+        }
+        function sendMsg(msg){
+            socket.emit('chat message', msg);
+            $msgInput.value = "";
+        }
+
     </script>
+
     <!--script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
